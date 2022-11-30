@@ -9,7 +9,7 @@ import javax.validation.constraints.NotBlank
  * @author Aivyss
  * @since 11/30/2022
  */
-class EmailUserCreate(
+data class EmailUserCreate(
     @field:Email(message = "EXCEPTION.PARAMETERS.EMAIL_FORMAT")
     val email: String,
     @field:NotBlank(message = "EXCEPTION.PARAMETERS.NOT_BLANK")

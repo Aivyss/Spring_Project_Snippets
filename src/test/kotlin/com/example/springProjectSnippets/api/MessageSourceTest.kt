@@ -1,9 +1,17 @@
 package com.example.springProjectSnippets.api
 
 import com.example.springProjectSnippets.AbstractTest
+import com.example.springProjectSnippets.api.exception.ErrorCode
+import com.example.springProjectSnippets.api.http.SupportLanguage
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
+/**
+ * Message Source Test & AssertJ Example
+ *
+ * @author Aivyss
+ * @since 11/30/2022
+ */
 class MessageSourceTest : AbstractTest() {
     @Test
     fun `Should Success to localize message`() {

@@ -1,13 +1,19 @@
 package com.example.springProjectSnippets.application
 
-import com.example.springProjectSnippets.api.ErrorCode
-import com.example.springProjectSnippets.api.InvalidRequestExceptionBuilder.throwInvalidRequest
+import com.example.springProjectSnippets.api.exception.ErrorCode
+import com.example.springProjectSnippets.api.exception.InvalidRequestExceptionBuilder.throwInvalidRequest
 import com.example.springProjectSnippets.api.domain.UserFactory
 import com.example.springProjectSnippets.api.domain.UserRepository
 import com.example.springProjectSnippets.endpoint.dto.EmailUserCreate
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 
+/**
+ * User Auth Test Service Bean
+ *
+ * @author Aivyss
+ * @since 12/01/2022
+ */
 @Service
 class UserAuthService(
     private val userRepository: UserRepository,

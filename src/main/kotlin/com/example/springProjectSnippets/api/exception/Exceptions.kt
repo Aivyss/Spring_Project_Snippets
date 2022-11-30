@@ -1,5 +1,6 @@
-package com.example.springProjectSnippets.api
+package com.example.springProjectSnippets.api.exception
 
+import com.example.springProjectSnippets.api.CodeEnum
 import org.springframework.core.NestedRuntimeException
 import org.springframework.http.HttpStatus
 

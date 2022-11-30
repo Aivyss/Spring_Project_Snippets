@@ -1,7 +1,8 @@
-package com.example.springProjectSnippets.api
+package com.example.springProjectSnippets.api.exception
 
-import com.example.springProjectSnippets.exception.FailResponse
-import com.example.springProjectSnippets.exception.FailResponseFactory
+import com.example.springProjectSnippets.api.http.RequestContext
+import com.example.springProjectSnippets.api.http.FailResponse
+import com.example.springProjectSnippets.api.http.FailResponseFactory
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.context.MessageSource

@@ -1,9 +1,10 @@
 package com.example.springProjectSnippets.endpoint
 
-import com.example.springProjectSnippets.api.ParameterErrorCode
+import com.example.springProjectSnippets.api.ObjectMapperHolder
+import com.example.springProjectSnippets.api.exception.ParameterErrorCode
 import com.example.springProjectSnippets.endpoint.dto.EmailUserCreate
-import com.example.springProjectSnippets.exception.FailResponse
-import com.example.springProjectSnippets.exception.SuccessResponse
+import com.example.springProjectSnippets.api.http.FailResponse
+import com.example.springProjectSnippets.api.http.SuccessResponse
 import com.fasterxml.jackson.core.type.TypeReference
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -14,6 +15,12 @@ import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers
 
+/**
+ * MockMvc Test Example
+ *
+ * @author Aivyss
+ * @since 12/01/2022
+ */
 class UserAuthControllerTest : EndpointTest() {
     val uri = "/api/users/auth"
 
@@ -31,7 +38,7 @@ class UserAuthControllerTest : EndpointTest() {
         val requestBuilder = MockMvcRequestBuilders.post(uri)
             .contentType(MediaType.APPLICATION_JSON)
             .accept(MediaType.APPLICATION_JSON)
-            .content(objectMapper.writeValueAsString(request))
+            .content(ObjectMapperHolder.writeValueAsString(request))
         val perform = mockMvc.perform(requestBuilder)
 
         // * then
@@ -39,7 +46,7 @@ class UserAuthControllerTest : EndpointTest() {
             .andExpect(MockMvcResultMatchers.status().`is`(HttpStatus.CREATED.value()))
             .andReturn().response.contentAsString
 
-        val response = objectMapper.readValue(responseJson, object : TypeReference<SuccessResponse<Boolean>>() {})
+        val response = ObjectMapperHolder.readValue(responseJson, object : TypeReference<SuccessResponse<Boolean>>() {})
         assertThat(response.data).isTrue
     }
 
@@ -56,7 +63,7 @@ class UserAuthControllerTest : EndpointTest() {
         val requestBuilder = MockMvcRequestBuilders.post(uri)
             .contentType(MediaType.APPLICATION_JSON)
             .accept(MediaType.APPLICATION_JSON)
-            .content(objectMapper.writeValueAsString(request))
+            .content(ObjectMapperHolder.writeValueAsString(request))
         val perform = mockMvc.perform(requestBuilder)
 
         // * then
@@ -64,7 +71,7 @@ class UserAuthControllerTest : EndpointTest() {
             .andExpect(MockMvcResultMatchers.status().`is`(HttpStatus.BAD_REQUEST.value()))
             .andReturn().response.contentAsString
 
-        val response = objectMapper.readValue(responseJson, object : TypeReference<FailResponse>() {})
+        val response = ObjectMapperHolder.readValue(responseJson, object : TypeReference<FailResponse>() {})
         assertThat(response.errorCode).isEqualTo(ParameterErrorCode.EMAIL_FORMAT.getNameValue())
     }
 }

@@ -1,8 +1,7 @@
-package com.example.springProjectSnippets.exception
+package com.example.springProjectSnippets.api.http
 
-import com.example.springProjectSnippets.api.ErrorCode
-import com.example.springProjectSnippets.api.InvalidRequestException
-import com.example.springProjectSnippets.api.SupportLanguage
+import com.example.springProjectSnippets.api.exception.ErrorCode
+import com.example.springProjectSnippets.api.exception.InvalidRequestException
 import org.springframework.http.HttpStatus
 import java.time.LocalDateTime
 
@@ -11,6 +10,7 @@ import java.time.LocalDateTime
  * restricted sub types: SuccessResponse, FailResponse
  *
  * @author Aivyss
+ * @since 11/30/2022
  */
 sealed class BaseResponse(
     val success: Boolean,

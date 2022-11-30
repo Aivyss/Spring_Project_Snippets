@@ -1,10 +1,9 @@
 package com.example.springProjectSnippets.endpoint
 
-import com.example.springProjectSnippets.api.ExceptionController
-import com.example.springProjectSnippets.api.RequestContext
 import com.example.springProjectSnippets.api.config.MessageSourceConfig
+import com.example.springProjectSnippets.api.exception.ExceptionController
+import com.example.springProjectSnippets.api.http.RequestContext
 import com.example.springProjectSnippets.application.UserAuthService
-import com.fasterxml.jackson.databind.ObjectMapper
 import org.junit.jupiter.api.extension.ExtendWith
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration
@@ -15,6 +14,12 @@ import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.context.junit.jupiter.SpringExtension
 import org.springframework.test.web.servlet.MockMvc
 
+/**
+ * MockMvcTest Example
+ *
+ * @author Aivyss
+ * @since 12/01/2022
+ */
 @ActiveProfiles("test")
 @ExtendWith(SpringExtension::class)
 @WebMvcTest(
@@ -36,7 +41,4 @@ open class EndpointTest {
 
     @Autowired
     protected lateinit var mockMvc: MockMvc
-
-    @Autowired
-    protected lateinit var objectMapper: ObjectMapper
 }

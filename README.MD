@@ -2,20 +2,23 @@
 
 ## Ongoing
 1. Spring Security
+2. Role & Privilege
 
 ## Next Issues
-1. AOP Usage
-2. Logger Process
+1. JPA Auditing
+2. Event Publishing Example
 
 ## applied list
 1. i18n 
-2. simple data validations (next step: ConstraintValidator)
+2. Simple Data Validations (next step: ConstraintValidator)
 3. Request Context
 4. Exception Integration, Exception Handling
 5. Response Integration
 6. Spring Data JPA
 7. Configuration Injections
 8. Mockito-kotlin, AssertJ, Junit
+9. AOP Usage 
+10. Logger Process
 
 ## Environment
 1. H2 Database

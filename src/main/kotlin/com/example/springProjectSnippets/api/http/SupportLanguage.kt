@@ -1,4 +1,4 @@
-package com.example.springProjectSnippets.api
+package com.example.springProjectSnippets.api.http
 
 import java.util.*
 

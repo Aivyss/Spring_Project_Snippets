@@ -1,6 +1,6 @@
 package com.example.springProjectSnippets.endpoint
 
-import com.example.springProjectSnippets.exception.SuccessResponse
+import com.example.springProjectSnippets.api.http.SuccessResponse
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController

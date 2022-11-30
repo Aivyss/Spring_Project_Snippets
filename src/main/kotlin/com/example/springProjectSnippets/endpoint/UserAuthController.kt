@@ -2,7 +2,8 @@ package com.example.springProjectSnippets.endpoint
 
 import com.example.springProjectSnippets.application.UserAuthService
 import com.example.springProjectSnippets.endpoint.dto.EmailUserCreate
-import com.example.springProjectSnippets.exception.SuccessResponse
+import com.example.springProjectSnippets.api.http.SuccessResponse
+import com.example.springProjectSnippets.api.logger.Log
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -19,6 +20,7 @@ import javax.validation.Valid
  */
 @RestController
 @RequestMapping("/api/users/auth")
+@Log
 class UserAuthController(
     private val service: UserAuthService,
 ) {

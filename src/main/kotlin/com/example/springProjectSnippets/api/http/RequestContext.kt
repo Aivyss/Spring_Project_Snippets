@@ -1,9 +1,8 @@
-package com.example.springProjectSnippets.api
+package com.example.springProjectSnippets.api.http
 
 import org.springframework.context.annotation.Scope
 import org.springframework.context.annotation.ScopedProxyMode
 import org.springframework.stereotype.Component
-import java.util.*
 
 /**
  * request context (isolation level: thread => life cycle: request)

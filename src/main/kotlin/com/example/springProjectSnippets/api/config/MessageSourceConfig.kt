@@ -1,6 +1,6 @@
 package com.example.springProjectSnippets.api.config
 
-import com.example.springProjectSnippets.api.SupportLanguage
+import com.example.springProjectSnippets.api.http.SupportLanguage
 import org.springframework.context.MessageSource
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
