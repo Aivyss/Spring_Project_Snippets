@@ -26,4 +26,4 @@
 
 ## Environment Caution
 - Do not use/upgrade Spring Boot 3.0.0 (11/30/2022 ~ ) 
-- JPA, jakarta is not comparable with kotlin
+- JPA, jakarta was not supported with Kotlin.
