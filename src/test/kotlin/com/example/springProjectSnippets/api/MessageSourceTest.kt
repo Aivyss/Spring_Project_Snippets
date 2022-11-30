@@ -1,11 +1,8 @@
 package com.example.springProjectSnippets.api
 
 import com.example.springProjectSnippets.AbstractTest
-import org.assertj.core.api.Assertions
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import org.springframework.boot.test.context.SpringBootTest
-import java.util.*
 
 class MessageSourceTest : AbstractTest() {
     @Test

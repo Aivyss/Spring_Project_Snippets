@@ -9,6 +9,7 @@ import org.springframework.context.NoSuchMessageException
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.MethodArgumentNotValidException
 import org.springframework.web.bind.annotation.ExceptionHandler
+import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestControllerAdvice
 import java.time.LocalDateTime
 import java.util.*
@@ -30,6 +31,7 @@ class ExceptionController(
      * exception handling: exception for invalid data processing
      */
     @ExceptionHandler(InvalidRequestException::class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     fun invalidRequestException(e: InvalidRequestException): FailResponse {
         log.info(e.debugMessage)
 
@@ -48,6 +50,7 @@ class ExceptionController(
      * exception handling: validation fail exception for validation of request body
      */
     @ExceptionHandler(MethodArgumentNotValidException::class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     fun methodArgsNotValidException(e: MethodArgumentNotValidException): FailResponse {
         val fieldErrors = e.bindingResult.fieldErrors
 
@@ -60,7 +63,7 @@ class ExceptionController(
         val localeMessage = getMessage(errorCode.getCodeValue(), emptyArray(), requestContext.supportLanguage.locale)
 
         return FailResponseFactory.create(
-            errorCode = errorCode,
+            errorCode = errorCode.getNameValue(),
             localeMessage = localeMessage,
             supportLanguage = requestContext.supportLanguage,
             httpStatus = HttpStatus.BAD_REQUEST,

@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController
  * @since 11/30/2022
  */
 @RestController
-@RequestMapping("/api/user")
+@RequestMapping("/api/users")
 class UserRetrieveController {
     @GetMapping("/info")
     fun retrieveUserInfo() = SuccessResponse("OK")

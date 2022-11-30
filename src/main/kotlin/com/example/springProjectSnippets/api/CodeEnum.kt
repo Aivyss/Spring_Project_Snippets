@@ -8,4 +8,5 @@ package com.example.springProjectSnippets.api
  */
 interface CodeEnum {
     fun getCodeValue(): String
+    fun getNameValue(): String
 }

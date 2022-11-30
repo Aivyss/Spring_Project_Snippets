@@ -1,6 +1,5 @@
 package com.example.springProjectSnippets.exception
 
-import com.example.springProjectSnippets.api.CodeEnum
 import com.example.springProjectSnippets.api.ErrorCode
 import com.example.springProjectSnippets.api.InvalidRequestException
 import com.example.springProjectSnippets.api.SupportLanguage
@@ -40,7 +39,7 @@ class SuccessResponse<T>(
  * @author Aivyss
  */
 class FailResponse(
-    val errorCode: CodeEnum = ErrorCode.INTERNAL_SERVER_ERROR,
+    val errorCode: String = ErrorCode.INTERNAL_SERVER_ERROR.getNameValue(),
     val interfaceMessage: String,
     supportLanguage: SupportLanguage,
     responseTime: LocalDateTime,
@@ -67,7 +66,7 @@ object FailResponseFactory {
         now: LocalDateTime,
     ): FailResponse {
         return FailResponse(
-            errorCode = e.errorCode,
+            errorCode = e.errorCode.getNameValue(),
             interfaceMessage = localeMessage,
             supportLanguage = supportLanguage,
             responseTime = now,
@@ -76,7 +75,7 @@ object FailResponseFactory {
     }
 
     fun create(
-        errorCode: CodeEnum = ErrorCode.INTERNAL_SERVER_ERROR,
+        errorCode: String = ErrorCode.INTERNAL_SERVER_ERROR.getNameValue(),
         localeMessage: String,
         httpStatus: HttpStatus = HttpStatus.BAD_REQUEST,
         supportLanguage: SupportLanguage,

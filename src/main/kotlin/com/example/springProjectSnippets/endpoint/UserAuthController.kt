@@ -1,13 +1,15 @@
 package com.example.springProjectSnippets.endpoint
 
+import com.example.springProjectSnippets.application.UserAuthService
 import com.example.springProjectSnippets.endpoint.dto.EmailUserCreate
 import com.example.springProjectSnippets.exception.SuccessResponse
-import jakarta.validation.Valid
-import org.springframework.validation.annotation.Validated
+import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestController
+import javax.validation.Valid
 
 /**
  * test endpoints
@@ -17,9 +19,14 @@ import org.springframework.web.bind.annotation.RestController
  */
 @RestController
 @RequestMapping("/api/users/auth")
-class UserAuthController {
+class UserAuthController(
+    private val service: UserAuthService,
+) {
     @PostMapping
-    fun signup(@RequestBody @Validated request: EmailUserCreate): SuccessResponse<EmailUserCreate> {
-        return SuccessResponse(request)
+    @ResponseStatus(HttpStatus.CREATED)
+    fun signup(@RequestBody @Valid request: EmailUserCreate): SuccessResponse<Boolean> {
+        service.signup(request)
+
+        return SuccessResponse(data = true, httpStatus = HttpStatus.CREATED)
     }
 }
