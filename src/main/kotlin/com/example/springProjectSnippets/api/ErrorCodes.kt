@@ -5,14 +5,14 @@ package com.example.springProjectSnippets.api
  *
  * @author Aivyss
  */
-enum class ErrorCode(private val code: String) : CodeEnum {
-    INTERNAL_SERVER_ERROR("EXCEPTION.INTERNAL_SERVER_ERROR"),
+enum class ErrorCode : CodeEnum {
+    INTERNAL_SERVER_ERROR,
     ;
 
-    override fun getCodeValue(): String = this.code
+    override fun getCodeValue(): String = "EXCEPTION.$name"
 
     companion object {
-        fun matches(str: String?): CodeEnum = ErrorCode.values().find { it.name == str } ?: INTERNAL_SERVER_ERROR
+        fun matches(str: String?): CodeEnum = ErrorCode.values().find { it.getCodeValue() == str } ?: INTERNAL_SERVER_ERROR
     }
 }
 
@@ -22,13 +22,13 @@ enum class ErrorCode(private val code: String) : CodeEnum {
  *  @author Aivyss
  *  @since 11/30/2022
  */
-enum class ParameterErrorCode(private val code: String) : CodeEnum {
-    EMAIL_FORMAT("EXCEPTION.PARAMETERS.EMAIL_FORMAT"),
+enum class ParameterErrorCode : CodeEnum {
+    EMAIL_FORMAT,
     ;
 
-    override fun getCodeValue(): String  = this.code
+    override fun getCodeValue(): String = "EXCEPTION.PARAMETERS.${name}"
 
     companion object {
-        fun matches(str: String?): CodeEnum = ParameterErrorCode.values().find { it.name == str } ?: ErrorCode.INTERNAL_SERVER_ERROR
+        fun matches(str: String?): CodeEnum = ParameterErrorCode.values().find { it.getCodeValue() == str } ?: ErrorCode.INTERNAL_SERVER_ERROR
     }
 }

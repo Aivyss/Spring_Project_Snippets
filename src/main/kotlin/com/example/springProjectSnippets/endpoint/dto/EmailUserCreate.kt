@@ -10,8 +10,8 @@ import jakarta.validation.constraints.NotBlank
  * @since 11/30/2022
  */
 data class EmailUserCreate(
-    @Email(message = "EXCEPTION.PARAMETERS.EMAIL_FORMAT")
+    @field:Email(message = "EXCEPTION.PARAMETERS.EMAIL_FORMAT")
     val email: String,
-    @NotBlank(message = "EXCEPTION.PARAMETERS.NOT_BLANK")
+    @field:NotBlank(message = "EXCEPTION.PARAMETERS.NOT_BLANK")
     val password: String,
 )

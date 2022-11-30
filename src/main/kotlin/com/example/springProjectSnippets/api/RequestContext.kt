@@ -15,5 +15,4 @@ import java.util.*
 @Scope("request", proxyMode = ScopedProxyMode.TARGET_CLASS)
 class RequestContext(
     val supportLanguage: SupportLanguage = SupportLanguage.KO,
-    val locale: Locale = Locale.KOREAN,
 )

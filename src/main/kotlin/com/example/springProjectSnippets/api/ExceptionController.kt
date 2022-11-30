@@ -5,11 +5,13 @@ import com.example.springProjectSnippets.exception.FailResponseFactory
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.context.MessageSource
+import org.springframework.context.NoSuchMessageException
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.MethodArgumentNotValidException
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.RestControllerAdvice
 import java.time.LocalDateTime
+import java.util.*
 
 /**
  * general exception handler
@@ -30,7 +32,8 @@ class ExceptionController(
     @ExceptionHandler(InvalidRequestException::class)
     fun invalidRequestException(e: InvalidRequestException): FailResponse {
         log.info(e.debugMessage)
-        val localeMessage = messageSource.getMessage(e.errorCode.getCodeValue(), e.messageArgs, requestContext.locale)
+
+        val localeMessage = getMessage(e.errorCode.getCodeValue(), e.messageArgs, requestContext.supportLanguage.locale)
 
         return FailResponseFactory.create(
             e = e,
@@ -54,7 +57,7 @@ class ExceptionController(
             ErrorCode.INTERNAL_SERVER_ERROR
         }
 
-        val localeMessage = messageSource.getMessage(errorCode.getCodeValue(), emptyArray(), requestContext.locale)
+        val localeMessage = getMessage(errorCode.getCodeValue(), emptyArray(), requestContext.supportLanguage.locale)
 
         return FailResponseFactory.create(
             errorCode = errorCode,
@@ -63,5 +66,17 @@ class ExceptionController(
             httpStatus = HttpStatus.BAD_REQUEST,
             now = LocalDateTime.now(),
         )
+    }
+
+    private fun getMessage(codeValue: String, args: Array<String>?, locale: Locale): String {
+        return try {
+            messageSource.getMessage(codeValue, args, locale)
+        } catch (e: NoSuchMessageException) {
+            messageSource.getMessage(
+                ErrorCode.INTERNAL_SERVER_ERROR.getCodeValue(),
+                emptyArray(),
+                requestContext.supportLanguage.locale
+            )
+        }
     }
 }
