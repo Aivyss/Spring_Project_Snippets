@@ -17,4 +17,16 @@ object InvalidRequestExceptionBuilder {
             httpStatus = httpStatus,
         )
     }
+
+    fun invalidRequest(
+        errorCode: CodeEnum,
+        debugMessage: String,
+        messageArgs: Array<String> = emptyArray(),
+        httpStatus: HttpStatus = HttpStatus.BAD_REQUEST,
+    ): InvalidRequestException = InvalidRequestException(
+        errorCode = errorCode,
+        messageArgs = messageArgs,
+        debugMessage = debugMessage,
+        httpStatus = httpStatus,
+    )
 }

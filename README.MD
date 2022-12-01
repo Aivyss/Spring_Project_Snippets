@@ -3,6 +3,7 @@
 ## Ongoing
 1. Spring Security
 2. Role & Privilege
+3. Jwt authentication
 
 ## Next Issues
 1. JPA Auditing

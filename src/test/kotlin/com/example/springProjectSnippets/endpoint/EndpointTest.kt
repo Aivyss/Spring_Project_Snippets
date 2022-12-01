@@ -3,7 +3,7 @@ package com.example.springProjectSnippets.endpoint
 import com.example.springProjectSnippets.api.config.MessageSourceConfig
 import com.example.springProjectSnippets.api.exception.ExceptionController
 import com.example.springProjectSnippets.api.http.RequestContext
-import com.example.springProjectSnippets.application.UserAuthService
+import com.example.springProjectSnippets.api.security.UserAuthService
 import org.junit.jupiter.api.extension.ExtendWith
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration

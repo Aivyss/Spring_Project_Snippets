@@ -10,4 +10,11 @@ spring:
 domain:
     allow-cors:
         localhost: http://localhost:8080
+        
+jwt:
+    accessTokenSecret: "mfoa)29afas!@fdASF3e"
+    refreshTokenSecret: "1892ka09vm/$@!adsf@A32v"
+    accessTokenLifetime: 1800000 # 30 min
+    refreshTokenLifetime: 10800000 # 3 hour
+    
     

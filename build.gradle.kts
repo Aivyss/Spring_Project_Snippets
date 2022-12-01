@@ -34,6 +34,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
     /* security */
     implementation("org.springframework.boot:spring-boot-starter-security:2.7.5")
+    implementation("io.jsonwebtoken:jjwt:0.9.1")
     /* data validation */
     implementation("org.springframework.boot:spring-boot-starter-validation:2.7.5")
     /* kotlin */

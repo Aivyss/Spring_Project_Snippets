@@ -1,9 +1,11 @@
 package com.example.springProjectSnippets.endpoint
 
-import com.example.springProjectSnippets.application.UserAuthService
+import com.example.springProjectSnippets.api.security.UserAuthService
 import com.example.springProjectSnippets.endpoint.dto.EmailUserCreate
 import com.example.springProjectSnippets.api.http.SuccessResponse
 import com.example.springProjectSnippets.api.logger.Log
+import com.example.springProjectSnippets.endpoint.dto.EmailUserLogin
+import com.example.springProjectSnippets.endpoint.dto.LoginSuccessUser
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -31,4 +33,13 @@ class UserAuthController(
 
         return SuccessResponse(data = true, httpStatus = HttpStatus.CREATED)
     }
+
+    @PostMapping("/login", params=["type=EMAIL"])
+    @ResponseStatus(HttpStatus.OK)
+    fun login(
+        @RequestBody @Valid request: EmailUserLogin
+    ): SuccessResponse<LoginSuccessUser> = SuccessResponse(
+        data = service.emailUserLogin(request),
+        httpStatus = HttpStatus.OK,
+    )
 }

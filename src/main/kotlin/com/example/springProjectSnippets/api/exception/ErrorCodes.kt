@@ -11,6 +11,9 @@ import com.example.springProjectSnippets.api.CodeEnum
 enum class ErrorCode : CodeEnum {
     INTERNAL_SERVER_ERROR,
     SIGN_UP_DUPLICATE_EMAIL_ERROR,
+    INVALID_ACCESS_USER,
+    NO_SUCH_USER_LOGIN_ERROR,
+    NOT_MATCHES_PASSWORD_LOGIN_ERROR
     ;
 
     override fun getCodeValue(): String = "EXCEPTION.$name"

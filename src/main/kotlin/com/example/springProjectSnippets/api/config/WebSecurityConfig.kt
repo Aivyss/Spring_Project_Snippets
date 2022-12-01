@@ -45,7 +45,9 @@ class WebSecurityConfig(private val domains: CorsDomainProperty) {
      */
     @Bean
     fun webSecurityCustomizer(): WebSecurityCustomizer? {
-        return WebSecurityCustomizer { web: WebSecurity -> web.ignoring().antMatchers("/api/users/auth") }
+        return WebSecurityCustomizer { web: WebSecurity -> web.ignoring().antMatchers(
+            "/api/users/auth/**"
+        ) }
     }
 
     /**
