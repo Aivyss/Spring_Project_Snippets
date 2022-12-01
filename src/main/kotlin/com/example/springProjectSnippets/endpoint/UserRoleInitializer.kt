@@ -7,7 +7,6 @@ import com.example.springProjectSnippets.domain.UserRepository
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
-import org.springframework.transaction.annotation.Transactional
 import javax.annotation.PostConstruct
 
 /**
@@ -32,7 +31,6 @@ class UserRoleInitializer(
         }
     }
 
-    @Transactional
     fun doInitialize() {
         adminInitialize()
         managerInitialize()
@@ -45,6 +43,7 @@ class UserRoleInitializer(
 
                 if (user != null && !user.roles.any { it.role == Role.ADMIN }) {
                     user.addRole(Role.ADMIN)
+                    userRepository.save(user)
                 }
             }
         } catch (e: Exception) {
@@ -59,6 +58,7 @@ class UserRoleInitializer(
 
                 if (user != null && !user.roles.any { it.role == Role.MANAGER }) {
                     user.addRole(Role.MANAGER)
+                    userRepository.save(user)
                 }
             }
         } catch (e: Exception) {
