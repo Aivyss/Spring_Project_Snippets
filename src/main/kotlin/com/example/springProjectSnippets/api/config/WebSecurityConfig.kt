@@ -1,5 +1,6 @@
 package com.example.springProjectSnippets.api.config
 
+import com.example.springProjectSnippets.api.role.Role
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.http.HttpHeaders
@@ -8,7 +9,6 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
-import org.springframework.security.crypto.encrypt.TextEncryptor
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.security.web.SecurityFilterChain
 import org.springframework.web.cors.CorsConfiguration
@@ -21,7 +21,7 @@ import org.springframework.web.filter.CorsFilter
  * @author Aivyss
  * @since 11/30/2022
  */
-@EnableWebSecurity
+@EnableWebSecurity // registry spring security filters to spring filter chain
 @Configuration
 class WebSecurityConfig(private val domains: CorsDomainProperty) {
 
@@ -30,8 +30,12 @@ class WebSecurityConfig(private val domains: CorsDomainProperty) {
      */
     @Bean
     fun configure(httpSecurity: HttpSecurity): SecurityFilterChain {
-        httpSecurity
-            .authorizeHttpRequests().antMatchers("/**").hasRole("USER")
+        httpSecurity.csrf().disable() // Prevent Cross-Site Request Forgery
+
+        httpSecurity.authorizeHttpRequests()
+            .antMatchers("/**").authenticated()
+            .antMatchers("/api/management/**").hasAnyRole(Role.MANAGER.name, Role.ADMIN.name)
+            .antMatchers("/api/admin/**").hasRole(Role.ADMIN.name)
 
         return httpSecurity.build()
     }

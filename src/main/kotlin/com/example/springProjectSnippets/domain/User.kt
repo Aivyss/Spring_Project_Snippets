@@ -1,5 +1,7 @@
-package com.example.springProjectSnippets.api.domain
+package com.example.springProjectSnippets.domain
 
+import com.example.springProjectSnippets.api.role.Role
+import org.springframework.data.jpa.repository.EntityGraph
 import org.springframework.data.jpa.repository.JpaRepository
 import javax.persistence.*
 
@@ -18,8 +20,21 @@ class User(
     val password: String,
 
     @Column(name = "USERNAME", nullable = false)
-    val username: String,
-)
+    var username: String,
+) {
+    @OneToMany(mappedBy = "user", cascade = [CascadeType.PERSIST, CascadeType.MERGE])
+    val roles: MutableList<UserRole> = mutableListOf()
+
+    @Column(name = "DELETED", nullable = false)
+    var deleted: Boolean = false
+
+    fun addRole(role: Role): User {
+        val userRole = UserRoleFactory.create(role = role, user = this)
+        roles += userRole
+
+        return this
+    }
+}
 
 object UserFactory {
     fun create(email: String, password: String, username: String): User = User(
@@ -31,5 +46,7 @@ object UserFactory {
 }
 
 interface UserRepository : JpaRepository<User, Long> {
-    fun existsByEmail(email: String): Boolean
+    fun existsByEmailAndDeletedFalse(email: String): Boolean
+    @EntityGraph(attributePaths = ["roles"])
+    fun findByEmailAndDeletedFalse(email: String): User?
 }
