@@ -3,9 +3,13 @@ package com.example.springProjectSnippets.api.security
 import com.example.springProjectSnippets.api.exception.ErrorCode
 import com.example.springProjectSnippets.api.exception.InvalidRequestExceptionBuilder.invalidRequest
 import com.example.springProjectSnippets.api.exception.InvalidRequestExceptionBuilder.throwInvalidRequest
+import com.example.springProjectSnippets.api.http.RequestContext
+import com.example.springProjectSnippets.api.role.Role
 import com.example.springProjectSnippets.api.security.dto.CustomAuthentication
 import com.example.springProjectSnippets.api.security.dto.PrincipalDetails
 import com.example.springProjectSnippets.domain.UserFactory
+import com.example.springProjectSnippets.domain.UserLanguageFactory
+import com.example.springProjectSnippets.domain.UserLanguageRepository
 import com.example.springProjectSnippets.domain.UserRepository
 import com.example.springProjectSnippets.endpoint.dto.EmailUserCreate
 import com.example.springProjectSnippets.endpoint.dto.EmailUserLogin
@@ -24,8 +28,10 @@ import javax.servlet.http.HttpServletResponse
 @Service
 class UserAuthService(
     private val userRepository: UserRepository,
+    private val userLanguageRepository: UserLanguageRepository,
     private val passwordEncoder: PasswordEncoder,
     private val jwtService: JwtService,
+    private val requestContext: RequestContext,
 ) {
     fun signup(request: EmailUserCreate): Long {
         if (userRepository.existsByEmailAndDeletedFalse(request.email)) {
@@ -39,11 +45,15 @@ class UserAuthService(
             UserFactory.create(
                 email = it.email,
                 password = passwordEncoder.encode(request.password),
-                username = it.username
+                username = it.username,
+                roles = mutableListOf(Role.USER)
             )
         }
+        userRepository.save(userEntity)
 
-        return userRepository.save(userEntity).id
+        val userLanguage = UserLanguageFactory.create(user = userEntity, requestContext.supportLanguage)
+
+        return userLanguageRepository.save(userLanguage).user.id
     }
 
     fun emailUserLogin(request: EmailUserLogin, response: HttpServletResponse): LoginSuccessUser {

@@ -1,5 +1,8 @@
 package com.example.springProjectSnippets.domain
 
+import com.example.springProjectSnippets.api.exception.ErrorCode
+import com.example.springProjectSnippets.api.exception.InvalidRequestExceptionBuilder
+import com.example.springProjectSnippets.api.exception.InvalidRequestExceptionBuilder.invalidRequest
 import com.example.springProjectSnippets.api.role.Role
 import org.springframework.data.jpa.repository.EntityGraph
 import org.springframework.data.jpa.repository.JpaRepository
@@ -37,16 +40,29 @@ class User(
 }
 
 object UserFactory {
-    fun create(email: String, password: String, username: String): User = User(
-        id = 0L,
-        email = email,
-        password = password,
-        username = username,
-    )
+    fun create(email: String, password: String, username: String, roles: List<Role>): User {
+        val user = User(
+            id = 0L,
+            email = email,
+            password = password,
+            username = username,
+        )
+
+        return roles.forEach { user.addRole(it) }.let { user }
+    }
 }
 
 interface UserRepository : JpaRepository<User, Long> {
     fun existsByEmailAndDeletedFalse(email: String): Boolean
+
     @EntityGraph(attributePaths = ["roles"])
     fun findByEmailAndDeletedFalse(email: String): User?
+}
+
+fun UserRepository.getUserById(id: Long): User {
+    return this.findById(id).orElseThrow {
+        invalidRequest(
+            errorCode = ErrorCode.INVALID_ACCESS_USER,
+            debugMessage = "no found user")
+    }
 }

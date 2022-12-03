@@ -8,6 +8,6 @@ package com.example.springProjectSnippets.api.security.dto
  */
 enum class JwtAuthExcludeUrlPattern(val url: String) {
     USER_LOGIN("/api/users/auth/login"),
-    USER_SIGNUP("/api/users/auths/signup"),
+    USER_SIGNUP("/api/users/auth/signup"),
     ;
 }

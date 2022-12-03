@@ -1,13 +1,10 @@
 # Spring Project Snippets for Kotlin
 
 ## Ongoing
-1. Spring Security
-2. Role & Privilege
-3. Jwt authentication
+1. JPA Auditing
 
 ## Next Issues
-1. JPA Auditing
-2. Event Publishing Example
+1. Event Publishing Example
 
 ## applied list
 1. i18n 
@@ -20,6 +17,10 @@
 8. Mockito-kotlin, AssertJ, Junit
 9. AOP Usage 
 10. Logger Process
+11. Locale Resolving
+12. Jwt authentication 
+13. Spring Security 
+14. Role & Privilege
 
 ## Environment
 1. H2 Database

@@ -1,18 +1,23 @@
 package com.example.springProjectSnippets.api.config
 
+import com.example.springProjectSnippets.api.http.RequestContext
 import com.example.springProjectSnippets.api.http.SupportLanguage
+import com.example.springProjectSnippets.api.locale.CustomLocaleResolver
 import org.springframework.context.MessageSource
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.support.ReloadableResourceBundleMessageSource
+import org.springframework.web.servlet.LocaleResolver
 
 /**
- * message source configuration
+ * 1. message source configuration
+ * 2. LocaleResolver configuration
  *
  * @author Aivyss
+ * @since 11/30/2022
  */
 @Configuration
-class MessageSourceConfig {
+class I18nConfig {
     @Bean
     fun messageSource(): MessageSource {
         val messageSource = ReloadableResourceBundleMessageSource()
@@ -23,4 +28,7 @@ class MessageSourceConfig {
 
         return messageSource
     }
+
+    @Bean
+    fun localeResolver(requestContext: RequestContext): LocaleResolver = CustomLocaleResolver(requestContext = requestContext)
 }

@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component
 @Component
 @Scope("request", proxyMode = ScopedProxyMode.TARGET_CLASS)
 class RequestContext {
-    var userKey: Long? = null
+    var userKey: Long = -1
     var roles: List<Role> = listOf()
     var supportLanguage: SupportLanguage = SupportLanguage.KO
     var validUser: Boolean = false

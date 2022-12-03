@@ -1,6 +1,6 @@
 package com.example.springProjectSnippets.endpoint
 
-import com.example.springProjectSnippets.api.config.MessageSourceConfig
+import com.example.springProjectSnippets.api.config.I18nConfig
 import com.example.springProjectSnippets.api.exception.ExceptionController
 import com.example.springProjectSnippets.api.http.RequestContext
 import com.example.springProjectSnippets.api.security.UserAuthService
@@ -27,7 +27,7 @@ import org.springframework.test.web.servlet.MockMvc
         UserAuthController::class,
         UserRetrieveController::class,
         ExceptionController::class,
-        MessageSourceConfig::class,
+        I18nConfig::class,
         MessageSource::class,
         RequestContext::class,
     ],

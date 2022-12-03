@@ -27,7 +27,7 @@ import javax.validation.Valid
 class UserAuthController(
     private val service: UserAuthService,
 ) {
-    @PostMapping
+    @PostMapping("signup", params=["type=EMAIL"])
     @ResponseStatus(HttpStatus.CREATED)
     fun signup(@RequestBody @Valid request: EmailUserCreate): SuccessResponse<Boolean> {
         service.signup(request)
