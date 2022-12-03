@@ -15,7 +15,7 @@ import java.time.LocalDateTime
 sealed class BaseResponse(
     val success: Boolean,
     var httpStatus: HttpStatus,
-    var supportLanguage: SupportLanguage = SupportLanguage.KO,
+    var supportLanguage: SupportLanguage = SupportLanguage.EN,
     var responseTime: LocalDateTime = LocalDateTime.now(),
 )
 

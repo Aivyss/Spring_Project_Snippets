@@ -8,10 +8,10 @@ import java.util.*
  * @author Aivyss
  * @since 11/30/2022
  */
-enum class SupportLanguage(val locale: Locale, val languageId: String) {
-    KO(Locale.forLanguageTag("ko"), "ko"),
-    EN(Locale.forLanguageTag("en"), "en"),
-    JP(Locale.forLanguageTag("ja"), "ja"),
+enum class SupportLanguage(val locale: Locale, val languageId: String, val aliases: List<String>) {
+    KO(Locale.forLanguageTag("ko"), "ko", listOf("kr", "korea")),
+    EN(Locale.forLanguageTag("en"), "en", listOf("us", "gb")),
+    JP(Locale.forLanguageTag("ja"), "ja", listOf("jp", "japan")),
     ;
 
     companion object {
@@ -19,7 +19,10 @@ enum class SupportLanguage(val locale: Locale, val languageId: String) {
             return try {
                 SupportLanguage.valueOf(languageId?.uppercase() ?: EN.name)
             } catch (e: Exception) {
-                SupportLanguage.values().firstOrNull { it.languageId == languageId } ?: EN
+                SupportLanguage.values().firstOrNull {
+                    it.languageId.uppercase() == languageId?.uppercase()
+                            || languageId in it.aliases
+                } ?: EN
             }
         }
     }
