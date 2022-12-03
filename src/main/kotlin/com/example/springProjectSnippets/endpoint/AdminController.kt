@@ -13,6 +13,6 @@ class AdminController(
 ) {
     @GetMapping("/tickets")
     fun paginateTickets(@PathVariable userKey: Long) {
-
+        println(userKey)
     }
 }

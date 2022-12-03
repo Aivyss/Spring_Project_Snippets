@@ -1,16 +1,17 @@
 package com.example.springProjectSnippets.api.config
 
 import com.example.springProjectSnippets.api.role.Role
+import com.example.springProjectSnippets.api.security.JwtAuthFilter
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.http.HttpHeaders
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
-import org.springframework.security.config.annotation.web.builders.WebSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
-import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer
+import org.springframework.security.config.http.SessionCreationPolicy
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.security.web.SecurityFilterChain
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
 import org.springframework.web.cors.CorsConfiguration
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource
 import org.springframework.web.filter.CorsFilter
@@ -23,31 +24,38 @@ import org.springframework.web.filter.CorsFilter
  */
 @EnableWebSecurity // registry spring security filters to spring filter chain
 @Configuration
-class WebSecurityConfig(private val domains: CorsDomainProperty) {
+class WebSecurityConfig(
+    private val domains: CorsDomainProperty,
+    private val jwtAuthFilter: JwtAuthFilter,
+) {
 
     /**
-     * 특정 role을 가진 사람에게 허용되는 url pattern 등록
+     * 1. CSRF disabled
+     * 2. Security Sesssion disabled
+     * 3. http basic authorization disabled
+     * 4. Cors policy
+     * 5. jwt authorization
+     * 6. registration of UrlPatterns
+     *
      */
     @Bean
     fun configure(httpSecurity: HttpSecurity): SecurityFilterChain {
         httpSecurity.csrf().disable() // Prevent Cross-Site Request Forgery
+        httpSecurity.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) // JWT Authentication does not need session
+            .and()
+            .formLogin().disable()
+            .httpBasic().disable() // "headers": { "Authorization" $id, $pw } was not allowed
+
+        httpSecurity.addFilter(corsWebFilter()) // Requests suitable for CORS policies are allowed
+        httpSecurity.addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter::class.java)
 
         httpSecurity.authorizeHttpRequests()
+            .antMatchers("/api/users/auth/**").permitAll()
             .antMatchers("/**").authenticated()
             .antMatchers("/api/management/**").hasAnyRole(Role.MANAGER.name, Role.ADMIN.name)
             .antMatchers("/api/admin/**").hasRole(Role.ADMIN.name)
 
         return httpSecurity.build()
-    }
-
-    /**
-     * scurity filter chain을 거치지 않는 url 패턴 등록
-     */
-    @Bean
-    fun webSecurityCustomizer(): WebSecurityCustomizer? {
-        return WebSecurityCustomizer { web: WebSecurity -> web.ignoring().antMatchers(
-            "/api/users/auth/**"
-        ) }
     }
 
     /**

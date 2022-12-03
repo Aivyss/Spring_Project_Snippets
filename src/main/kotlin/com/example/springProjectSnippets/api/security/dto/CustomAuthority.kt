@@ -1,4 +1,4 @@
-package com.example.springProjectSnippets.api.security
+package com.example.springProjectSnippets.api.security.dto
 
 import com.example.springProjectSnippets.api.role.Role
 import org.springframework.security.core.GrantedAuthority

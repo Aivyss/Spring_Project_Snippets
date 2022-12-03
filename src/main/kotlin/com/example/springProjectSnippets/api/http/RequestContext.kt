@@ -1,5 +1,6 @@
 package com.example.springProjectSnippets.api.http
 
+import com.example.springProjectSnippets.api.role.Role
 import org.springframework.context.annotation.Scope
 import org.springframework.context.annotation.ScopedProxyMode
 import org.springframework.stereotype.Component
@@ -12,6 +13,9 @@ import org.springframework.stereotype.Component
  */
 @Component
 @Scope("request", proxyMode = ScopedProxyMode.TARGET_CLASS)
-class RequestContext(
-    val supportLanguage: SupportLanguage = SupportLanguage.KO,
-)
+class RequestContext {
+    var userKey: Long? = null
+    var roles: List<Role> = listOf()
+    var supportLanguage: SupportLanguage = SupportLanguage.KO
+    var validUser: Boolean = false
+}

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestController
+import javax.servlet.http.HttpServletResponse
 import javax.validation.Valid
 
 /**
@@ -37,9 +38,10 @@ class UserAuthController(
     @PostMapping("/login", params=["type=EMAIL"])
     @ResponseStatus(HttpStatus.OK)
     fun login(
-        @RequestBody @Valid request: EmailUserLogin
+        @RequestBody @Valid request: EmailUserLogin,
+        response: HttpServletResponse
     ): SuccessResponse<LoginSuccessUser> = SuccessResponse(
-        data = service.emailUserLogin(request),
+        data = service.emailUserLogin(request, response),
         httpStatus = HttpStatus.OK,
     )
 }
