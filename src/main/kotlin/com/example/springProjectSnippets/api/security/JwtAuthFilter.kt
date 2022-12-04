@@ -1,10 +1,10 @@
 package com.example.springProjectSnippets.api.security
 
-import com.example.springProjectSnippets.api.ObjectMapperHolder
 import com.example.springProjectSnippets.api.exception.ExceptionController
 import com.example.springProjectSnippets.api.exception.InvalidRequestException
 import com.example.springProjectSnippets.api.http.RequestContext
 import com.example.springProjectSnippets.api.security.dto.JwtAuthExcludeUrlPattern
+import com.fasterxml.jackson.databind.ObjectMapper
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.stereotype.Component
 import org.springframework.web.filter.OncePerRequestFilter
@@ -23,6 +23,7 @@ class JwtAuthFilter(
     val jwtService: JwtService,
     val exceptionController: ExceptionController,
     val requestContext: RequestContext,
+    val objectMapper: ObjectMapper,
 ) : OncePerRequestFilter() {
     private val excludeUrlPatterns: List<String> = JwtAuthExcludeUrlPattern.values().map { it.url }
 
@@ -41,7 +42,7 @@ class JwtAuthFilter(
         } catch (e: InvalidRequestException) {
             response.contentType = "application/json"
             response.characterEncoding = "UTF-8"
-            response.writer.write(ObjectMapperHolder.writeValueAsString(exceptionController.invalidRequestException(e)))
+            response.writer.write(objectMapper.writeValueAsString(exceptionController.invalidRequestException(e)))
         }
     }
 

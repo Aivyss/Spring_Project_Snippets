@@ -1,5 +1,6 @@
 package com.example.springProjectSnippets.api.config
 
+import com.example.springProjectSnippets.api.locale.LocaleChangeFilter
 import com.example.springProjectSnippets.api.role.Role
 import com.example.springProjectSnippets.api.security.JwtAuthFilter
 import org.springframework.context.annotation.Bean
@@ -27,6 +28,7 @@ import org.springframework.web.filter.CorsFilter
 class WebSecurityConfig(
     private val domains: CorsDomainProperty,
     private val jwtAuthFilter: JwtAuthFilter,
+    private val localeChangeFilter: LocaleChangeFilter,
 ) {
 
     /**
@@ -48,6 +50,7 @@ class WebSecurityConfig(
 
         httpSecurity.addFilter(corsWebFilter()) // Requests suitable for CORS policies are allowed
         httpSecurity.addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter::class.java)
+        httpSecurity.addFilterBefore(localeChangeFilter, JwtAuthFilter::class.java)
 
         httpSecurity.authorizeHttpRequests()
             .antMatchers("/api/users/auth/**").permitAll()
