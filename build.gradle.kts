@@ -37,6 +37,9 @@ dependencies {
     implementation("io.jsonwebtoken:jjwt:0.9.1")
     /* data validation */
     implementation("org.springframework.boot:spring-boot-starter-validation:2.7.5")
+    /* spring web flux */
+    implementation("org.springframework.boot:spring-boot-starter-webflux")
+    implementation("org.projectreactor:reactor-spring:1.0.1.RELEASE")
     /* kotlin */
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
@@ -52,6 +55,7 @@ dependencies {
     testImplementation("org.mockito.kotlin:mockito-kotlin:4.0.0")
     /* configuration processor */
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
+
 }
 
 tasks.withType<KotlinCompile> {
