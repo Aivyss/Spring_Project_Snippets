@@ -54,6 +54,7 @@ class WebSecurityConfig(
 
         httpSecurity.authorizeHttpRequests()
             .antMatchers("/api/users/auth/**").permitAll()
+            .antMatchers("/api/test/**").permitAll()
             .antMatchers("/**").authenticated()
             .antMatchers("/api/management/**").hasAnyRole(Role.MANAGER.name, Role.ADMIN.name)
             .antMatchers("/api/admin/**").hasRole(Role.ADMIN.name)

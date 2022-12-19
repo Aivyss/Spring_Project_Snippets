@@ -47,6 +47,7 @@ class JwtAuthFilter(
     }
 
     override fun shouldNotFilter(request: HttpServletRequest): Boolean {
-        return request.requestURI in excludeUrlPatterns
+//        return request.requestURI in excludeUrlPatterns
+        return true
     }
 }
